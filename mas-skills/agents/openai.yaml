@@ -1,0 +1,4 @@
+interface:
+  display_name: "MAS Skills Hub"
+  short_description: "Route MAS backend standards"
+  default_prompt: "Route backend tasks to the right MAS sub-skills and apply a consistent standards workflow across boundary, data model, naming, function design, and API contract."
