@@ -8,4 +8,5 @@ AUTO-MAS 官方开发 skill
 - `mas-data-model`：用于规范后端数据模型的结构、类型、默认值和兼容性演进。
 - `mas-function-design`：用于规范后端函数的职责划分、参数设计、返回约定和副作用控制。
 - `mas-module-boundary`：用于约束后端模块分层、依赖方向和代码归属边界。
+- `mas-code-standards`：用于应用 AUTO-MAS 的代码规范，规范内容主要从 `DLmaster_361` 在 `dev` 上的代表性提交中提炼，尤其适用于 Electron 初始化与服务层代码。
 - `mas-schema-naming`：用于统一后端 schema 的命名方式，减少字段语义漂移。
