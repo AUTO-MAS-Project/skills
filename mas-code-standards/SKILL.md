@@ -1,3 +1,4 @@
+---
 name: mas-code-standards
 description: Apply AUTO-MAS code standards derived from representative DLmaster_361 commits on dev. Use when editing modules mainly authored by DLmaster_361, especially frontend/electron/services, frontend/electron/ipc, initialization UI code, or when the user asks to follow AUTO-MAS code standards or code conventions.
 ---
