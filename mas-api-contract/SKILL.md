@@ -38,6 +38,8 @@ Current `dev` baseline:
 2. Keep action suffixes explicit for non-CRUD operations (`/start`, `/stop`, `/reorder`).
 3. Keep endpoint names concise and unambiguous.
 4. Avoid introducing equivalent endpoints with different verbs/paths.
+5. For `POST` query-style endpoints such as combobox/list options, prefer one endpoint with an explicit request-body discriminator over splitting equivalent endpoints by implementation type.
+6. Do not create parallel paths like `/xxx-foo` and `/xxx-bar` solely because the backend reads different config books; keep the path semantic stable and put the selected type in the body.
 
 ## Request/Response Schema Rules
 1. Use `*In` for request models.
@@ -45,6 +47,9 @@ Current `dev` baseline:
 3. Use shared `OutBase` for common response envelope fields when applicable.
 4. Bind endpoint `response_model` explicitly.
 5. Do not return raw untyped dicts if a schema model exists.
+6. When a request needs to choose between known plan/script/config families, model that selector explicitly instead of encoding it in the URL path or handler name.
+7. Define or update request/response data models in `app/models/schema.py` before wiring a new route.
+8. Create routes in the corresponding `app/api/` module and keep route handlers as thin transport adapters around schema models and backend calls.
 
 ## Field Naming Rules
 1. Keep external API fields stable and consistent per established style.
@@ -74,6 +79,10 @@ Current `dev` baseline:
 2. Deprecate fields/endpoints with transition period.
 3. Keep backward read compatibility when renaming request fields.
 4. Document any breaking contract change before merge.
+5. For OpenAPI-exposed schema fields already consumed by generated frontend clients, avoid rewriting a stable flat `Literal[...]` field into `Union[...]` plus shared type aliases unless you have verified that the generated TypeScript runtime exports remain unchanged.
+6. Treat documented local integration entrypoints as compatibility surfaces too; do not rename or repurpose stable paths such as the documented MCP SSE endpoint without an explicit migration plan.
+7. After backend API changes, regenerate frontend API clients from `http://127.0.0.1:36163/openapi.json` with `openapi --output ./src/api --client axios` instead of hand-editing generated TypeScript.
+8. When testing new API calls from the frontend, remember that plain `yarn dev` can use the remote `dev` backend; start the local backend first when verifying local API changes.
 
 ## Layer Boundary Rules
 1. `api` layer owns transport contract mapping only.
@@ -89,3 +98,6 @@ Current `dev` baseline:
 5. Field names align with existing canonical semantics.
 6. WebSocket payload changes preserve envelope compatibility.
 7. Contract changes include compatibility notes.
+8. `POST` endpoints do not multiply paths when a body selector would keep the contract simpler.
+9. Changes to documented localhost endpoints or startup assumptions were reviewed for user- and tool-facing compatibility, not just backend correctness.
+10. OpenAPI regeneration is handled as a separate generated-code step, and generated files are not manually edited.

@@ -100,6 +100,8 @@ Signal examples:
 4. Use callback-based progress reporting with typed payloads for long-running tasks.
 5. When the task is a small refactor, bias toward local simplification over helper extraction.
 6. When the task is a new type landing, bias toward extending current branches and registries rather than introducing polymorphic frameworks.
+7. When several variants share the same operation shape, use an existing book/registry/dict mapping instead of adding parallel methods for each variant.
+8. Keep one-off, frequently inspected task mutation logic inline in the owner function; mark the block with a short comment and blank lines.
 
 ## Error And Result Style
 1. Cross-service operations usually return stable objects such as:
@@ -112,6 +114,7 @@ Signal examples:
 1. Logger names are Chinese and tied to module responsibility, for example `后端服务`, `初始化服务`, `镜像源服务`.
 2. Log messages are operational and short.
 3. Comments explain purpose, stage, or compatibility intent; they do not narrate trivial syntax.
+4. Cleanup preserves useful comments. Remove or rewrite comments only when they are stale, misleading, purely mechanical, or attached to code being removed.
 
 ## UI Style Notes
 1. Initialization UI keeps one central state map for steps.
@@ -127,3 +130,10 @@ Signal examples:
 3. File-local consistency beats forcing a global formatting preference.
 4. Recent Electron and initialization code is the strongest reference. Do not assume every older Python file matches it exactly.
 5. For this skill, the three named commits override more generic style assumptions when they conflict.
+6. Config manager/container layers own type safety for stored instances; downstream validators should not repeat those checks unless an unsupported input path can bypass the container.
+7. Avoid duplicating user-facing config choices. Merge mutually exclusive modes into one selector, or keep the existing selector and apply behavior to the relevant first matching task.
+8. Product architecture is config-swap plus log-monitor driven: AUTO-MAS imports a script's config before task start, restores it after completion, and judges run state through log text, log timestamp, and process-exit signals. Refactors should preserve that explicit operating model.
+9. Documented localhost integration surfaces such as the MCP SSE endpoint are part of the product contract; avoid casual renames or hidden behavior changes at those entrypoints.
+10. Developer documentation treats config, schema, API, task dispatch, task folder, and frontend page work as one complete script-adaptation path. Partial adaptation is a review smell even when the edited layer is internally correct.
+11. Function calls should stay readable at the call site: positional arguments are fine for tiny obvious calls, while boolean arguments and calls with more than two arguments should use keywords.
+12. Commit messages follow the documented Conventional Commits shape, but local history often uses concise Chinese subjects; match both the formal structure and the nearby tone.
