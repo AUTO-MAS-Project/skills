@@ -8,6 +8,16 @@ description: Master entrypoint for MAS engineering standards and code convention
 ## Objective
 Provide one routing entrypoint for MAS engineering standards and keep implementation decisions consistent with current project maintainer review preferences.
 
+## Repository Authority
+
+AUTO-MAS splits responsibilities across repositories:
+
+1. `AUTO-MAS-Project/AUTO-MAS` keeps application code and a minimal `AGENTS.md` entrypoint.
+2. `AUTO-MAS-Project/AUTO-MAS-docs` / <https://doc.auto-mas.top/developer/> owns branch, contribution, commit, version, Issue, and PR writing rules.
+3. `AUTO-MAS-Project/skills` owns Agent Skill behavior and engineering routing rules.
+
+When these areas overlap, use this skill for engineering decisions and use the docs site for contribution-process decisions.
+
 ## Project Rule Areas
 Apply these project rules directly when they overlap with a task:
 
@@ -25,7 +35,8 @@ Use these skills as needed:
 4. `mas-function-design`: function-level design for responsibility, signatures, side effects, and errors.
 5. `mas-api-contract`: endpoint contract standards for HTTP/WS request-response behavior.
 6. `mas-data-model`: modeling standards for schema/config/task layers and compatibility evolution.
-7. `mas-plan-schedule`: plan schedule type registration, backend/frontend plan dispatch, plan combobox consumers, and per-type table integration.
+7. `mas-script-specialized-adapter`: specialized script integration by script frontend architecture line; requires intake before implementation.
+8. `mas-plan-schedule`: plan schedule type registration, backend/frontend plan dispatch, plan combobox consumers, and per-type table integration.
 
 ## Global Constraints
 Apply these constraints before selecting or combining sub-skills.
@@ -53,9 +64,9 @@ Use `mas-api-contract`.
 6. Task mentions model structure, typing/defaults/constraints, migration of model fields:
 Use `mas-data-model`.
 7. Task mentions adding a new script, script-specific adaptation, or task lifecycle:
-Use `mas-module-boundary`, `mas-data-model`, and `mas-function-design`.
+Use `mas-script-specialized-adapter` first, then combine `mas-module-boundary`, `mas-data-model`, `mas-function-design`, and `mas-api-contract` as needed.
 8. Task mentions commit messages, docstrings, config comments, or project contribution style:
-Use `mas-code-standards`.
+Use `mas-code-standards` for code-style decisions; use the docs site for contribution-process wording.
 9. Task mentions plan schedules, schedule types, `PlanConfig`, `PLAN_BOOK`, plan comboboxes, or adding a new plan table:
 Use `mas-plan-schedule`.
 
@@ -68,9 +79,10 @@ When multiple concerns appear, apply this order:
 4. `mas-schema-naming`
 5. `mas-function-design`
 6. `mas-api-contract`
-7. `mas-plan-schedule`
+7. `mas-script-specialized-adapter` after architecture intake, when the task is a specialized adapter.
+8. `mas-plan-schedule`
 
-Reason: establish local conventions first, place code correctly second, stabilize model structure third, then naming, then function behavior, then transport contract, then apply plan-schedule-specific wiring rules when relevant.
+Reason: establish local conventions first, place code correctly second, stabilize model structure third, then naming, then function behavior, then transport contract. Specialized adapters add a mandatory architecture-intake step, and plan schedule rules apply when the task touches scheduler registration.
 
 ## Output Requirements
 When using this hub:
@@ -80,6 +92,7 @@ When using this hub:
 3. Apply only the minimum set required by the task.
 4. Keep compatibility-first decisions for legacy modules unless explicitly asked to refactor broadly.
 5. In review tasks, call out where findings follow known maintainer preferences rather than only generic engineering taste.
+6. For Issue/PR body writing, follow the docs site instead of inventing repository-specific text here.
 
 ## Review Checklist
 1. Selected sub-skills match the user request scope.
@@ -87,3 +100,4 @@ When using this hub:
 3. Shared schema semantics remain canonical.
 4. Function behavior and API contract stay consistent after changes.
 5. Relevant project rules were considered for API, config, script task, and contribution-style changes.
+6. Contribution-process details were not duplicated from the docs site except as links or brief reminders.
