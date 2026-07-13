@@ -35,8 +35,9 @@ Use these skills as needed:
 4. `mas-function-design`: function-level design for responsibility, signatures, side effects, and errors.
 5. `mas-api-contract`: endpoint contract standards for HTTP/WS request-response behavior.
 6. `mas-data-model`: modeling standards for schema/config/task layers and compatibility evolution.
-7. `mas-script-specialized-adapter`: specialized script integration by script frontend architecture line; requires intake before implementation.
-8. `mas-plan-schedule`: plan schedule type registration, backend/frontend plan dispatch, plan combobox consumers, and per-type table integration.
+7. `mas-plugin-module`: plugin management/market UI, frontend page extensions, plugin declarations and instances, declarative HTTP/WS, Script Adapter host contracts, and dynamic schema forms.
+8. `mas-script-specialized-adapter`: specialized script integration by script frontend architecture line; requires intake before implementation.
+9. `mas-plan-schedule`: plan schedule type registration, backend/frontend plan dispatch, plan combobox consumers, and per-type table integration.
 
 ## Global Constraints
 Apply these constraints before selecting or combining sub-skills.
@@ -63,11 +64,13 @@ Use `mas-function-design`.
 Use `mas-api-contract`.
 6. Task mentions model structure, typing/defaults/constraints, migration of model fields:
 Use `mas-data-model`.
-7. Task mentions adding a new script, script-specific adaptation, or task lifecycle:
-Use `mas-script-specialized-adapter` first, then combine `mas-module-boundary`, `mas-data-model`, `mas-function-design`, and `mas-api-contract` as needed.
-8. Task mentions commit messages, docstrings, config comments, or project contribution style:
+7. Task mentions plugin management/market UI, plugin page extensions, plugin declarations, plugin instances, declarative HTTP/WS, or Script Adapter platform integration:
+Use `mas-plugin-module`.
+8. Task mentions adding a new external script, script-specific adaptation, or task lifecycle:
+Use `mas-script-specialized-adapter` first for architecture intake, then use `mas-plugin-module` for plugin-platform integration and combine `mas-module-boundary`, `mas-data-model`, `mas-function-design`, and `mas-api-contract` as needed.
+9. Task mentions commit messages, docstrings, config comments, or project contribution style:
 Use `mas-code-standards` for code-style decisions; use the docs site for contribution-process wording.
-9. Task mentions plan schedules, schedule types, `PlanConfig`, `PLAN_BOOK`, plan comboboxes, or adding a new plan table:
+10. Task mentions plan schedules, schedule types, `PlanConfig`, `PLAN_BOOK`, plan comboboxes, or adding a new plan table:
 Use `mas-plan-schedule`.
 
 ## Combined Execution Order
@@ -79,10 +82,11 @@ When multiple concerns appear, apply this order:
 4. `mas-schema-naming`
 5. `mas-function-design`
 6. `mas-api-contract`
-7. `mas-script-specialized-adapter` after architecture intake, when the task is a specialized adapter.
-8. `mas-plan-schedule`
+7. `mas-plugin-module` when the task touches the plugin platform or its UI surfaces.
+8. `mas-script-specialized-adapter` after architecture intake, when the task adapts an external script.
+9. `mas-plan-schedule`
 
-Reason: establish local conventions first, place code correctly second, stabilize model structure third, then naming, then function behavior, then transport contract. Specialized adapters add a mandatory architecture-intake step, and plan schedule rules apply when the task touches scheduler registration.
+Reason: establish local conventions first, place code correctly second, stabilize model structure third, then naming, function behavior, and transport contract. Plugin-platform rules apply before implementation details; specialized adapters retain their mandatory architecture-intake step, and plan schedule rules apply when the task touches scheduler registration.
 
 ## Output Requirements
 When using this hub:
